@@ -14,18 +14,18 @@ import javax.ws.rs.core.MediaType;
 @Path("/rooms")
 @Produces(MediaType.APPLICATION_JSON)
 public class RoomFactoryResource {
-	private static final System.Logger LOG = System.getLogger(RoomFactoryResource.class.getName());
-	@Inject
-	RoomService service;
+  private static final System.Logger LOG = System.getLogger(RoomFactoryResource.class.getName());
+  @Inject
+  RoomService service;
 
-	@PUT
-	@Path("{name}")
-	public void create(String name, @QueryParam("location") String location) {
-		boolean success = service.createRoom(name, location);
-		if (success) {
-			LOG.log(System.Logger.Level.INFO, () -> "successfully created room " + name);
-		} else {
-			throw new IllegalStateException("The room " + name + " already exists.");
-		}
-	}
+  @PUT
+  @Path("{name}")
+  public void create(String name, @QueryParam("location") String location) {
+    boolean success = service.createRoom(name, location);
+    if (success) {
+      LOG.log(System.Logger.Level.INFO, () -> "successfully created room " + name);
+    } else {
+      throw new IllegalStateException("The room " + name + " already exists.");
+    }
+  }
 }

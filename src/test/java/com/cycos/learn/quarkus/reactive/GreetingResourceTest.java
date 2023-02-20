@@ -16,37 +16,51 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class GreetingResourceTest {
-	@Test
-	public void testHelloEndpoint() {
-		hello().statusCode(Response.Status.OK.getStatusCode()).body(is("Hello from RESTEasy Reactive"));
-		hello("de").statusCode(Response.Status.OK.getStatusCode()).body(is("Hallo von RESTEasy Reactive"));
-		hello("fr").statusCode(Response.Status.OK.getStatusCode()).body(is("👋 RESTEasy Reactive"));
-		hello("zh").statusCode(Response.Status.OK.getStatusCode()).body(is("来自 RESTEasy Reactive 的问候"));
-	}
+  @Test
+  public void testHelloEndpoint() {
+    hello().statusCode(Response.Status.OK.getStatusCode()).body(is("Hello from RESTEasy Reactive"));
+    hello("de").statusCode(Response.Status.OK.getStatusCode()).body(is("Hallo von RESTEasy Reactive"));
+    hello("fr").statusCode(Response.Status.OK.getStatusCode()).body(is("👋 RESTEasy Reactive"));
+    hello("zh").statusCode(Response.Status.OK.getStatusCode()).body(is("来自 RESTEasy Reactive 的问候"));
+  }
 
-	@Test
-	public void checkRamdomGreeting() {
-		long n = ThreadLocalRandom.current().nextLong(4);
-		final String name = Stream.of("alice", "bob", "carol", "dave").skip(n).findFirst().orElse(null);
-		greeting(name).statusCode(Response.Status.OK.getStatusCode()).body(is("Hello " + name + "!"));
-	}
+  @Test
+  public void checkRamdomGreeting() {
+    long n = ThreadLocalRandom.current().nextLong(4);
+    final String name = Stream.of("alice", "bob", "carol", "dave").skip(n).findFirst().orElse(null);
+    greeting2(name).statusCode(Response.Status.OK.getStatusCode()).body(is("Hello " + name + "!"));
+  }
 
-	private static ValidatableResponse hello() {
-		return hello(null);
-	}
+  @Test
+  public void checkEmptyGreeting() {
+    given().log().all()
+        .when().get("hello/greeting")
+        .then().log().all().statusCode(Response.Status.OK.getStatusCode()).body(is("Hello " + null + "!"));
+  }
 
-	private static ValidatableResponse hello(String language) {
-		RequestSpecification request = given().log().all();
-		if (language != null) {
-			request = request.header(ACCEPT_LANGUAGE, language);
-		}
-		return request.when().get("/hello").then().log().all();
-	}
+  private static ValidatableResponse hello() {
+    return hello(null);
+  }
 
-	private static ValidatableResponse greeting(String name) {
-		RequestSpecification request = given().log().all();
-		return request.pathParam("name", name)
-				.when().get("hello/greeting/{name}")
-				.then().log().all();
-	}
+  private static ValidatableResponse hello(String language) {
+    RequestSpecification request = given().log().all();
+    if (language != null) {
+      request = request.header(ACCEPT_LANGUAGE, language);
+    }
+    return request.when().get("/hello").then().log().all();
+  }
+
+  private static ValidatableResponse greeting(String name) {
+    RequestSpecification request = given().log().all();
+    return request.pathParam("name", name)
+        .when().get("hello/greeting/de/{name}")
+        .then().log().all();
+  }
+
+  private static ValidatableResponse greeting2(String name) {
+    RequestSpecification request = given().log().all();
+    return request.queryParam("name", name).queryParam("lang", "de")
+        .when().get("hello/greeting")
+        .then().log().all();
+  }
 }

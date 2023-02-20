@@ -14,14 +14,14 @@ import io.vertx.core.http.HttpServerRequest;
  */
 @RequestScoped
 public class RequestLocale {
-	private final Locale locale;
+  private final Locale locale;
 
-	public RequestLocale(HttpServerRequest request) {
-		String acceptLanguage = request.getHeader(ACCEPT_LANGUAGE);
-		this.locale = acceptLanguage == null ? Locale.ENGLISH : new Locale(acceptLanguage);
-	}
+  public RequestLocale(HttpServerRequest request) {
+    String acceptLanguage = request.getHeader(ACCEPT_LANGUAGE);
+    this.locale = acceptLanguage == null ? Locale.ENGLISH : new Locale(acceptLanguage);
+  }
 
-	public Locale getLocale() {
-		return locale;
-	}
+  public Locale getLocale() {
+    return locale;
+  }
 }

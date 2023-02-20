@@ -12,13 +12,13 @@ import javax.enterprise.inject.Produces;
  */
 @ApplicationScoped
 public class KnownNames {
-	@Produces
-	public Set<String> createPersonNames() {
-		Set<String> names = new LinkedHashSet<>();
-		names.add("Alice");
-		names.add("Bob");
-		names.add("Carol");
-		names.add("Dave");
-		return names;
-	}
+  @Produces
+  public Set<String> createPersonNames() {
+    Set<String> names = new LinkedHashSet<>();
+    names.add("Alice");
+    names.add("Bob");
+    names.add("Carol");
+    names.add("Dave");
+    return names;
+  }
 }
