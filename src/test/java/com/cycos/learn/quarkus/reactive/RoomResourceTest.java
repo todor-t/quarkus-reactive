@@ -6,6 +6,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.emptyString;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+
 import javax.ws.rs.core.Response;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -15,25 +18,35 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class RoomResourceTest {
+  private static final Logger LOG = System.getLogger(RoomResourceTest.class.getSimpleName());
   private final String location = "Alsdorf";
 
   @Test
   public void checkRoomCreate() {
+    LOG.log(Level.INFO, "\n************ create room ************\n");
     createRoom("Vilcabamba", location).statusCode(Response.Status.NO_CONTENT.getStatusCode()).body(is(emptyString()));
+
+    LOG.log(Level.INFO, "\n************ create room again ************\n");
     createRoom("Vilcabamba", location).statusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
   }
 
   @Test
   public void checkRoomGet() {
+    LOG.log(Level.INFO, "\n************ create room ************\n");
     final String name = "Azubi";
     createRoom(name, location).statusCode(Response.Status.NO_CONTENT.getStatusCode());
+
+    LOG.log(Level.INFO, "\n************ get room ************\n");
     getRoom(name).statusCode(Response.Status.OK.getStatusCode()).contentType(ContentType.JSON)
         .body("name", equalTo(name)).and().body("location", equalTo(location));
   }
 
   @Test
   public void checkRoomEnter() {
+    LOG.log(Level.INFO, "\n************ enter room ************\n");
     enterRoom("Room 1", "alice").statusCode(Response.Status.NO_CONTENT.getStatusCode()).body(is(emptyString()));
+
+    LOG.log(Level.INFO, "\n************ enter unknown room ************\n");
     enterRoom("Room X", "alice").statusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
   }
 
