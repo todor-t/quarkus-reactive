@@ -25,18 +25,18 @@ public class RoomResource {
   @GET
   public Room getRoom(@PathParam("room") String name) {
     Room room = service.getRoom(name);
-    if (room != null) {
-      LOG.log(System.Logger.Level.INFO, () -> "got room by name: " + room);
+
+    if (room == null) {
+      throw new IllegalArgumentException("Room " + name + " does not exist."); // NOT_FOUND
     }
+
+    LOG.log(System.Logger.Level.INFO, () -> "got room by name: " + room);
     return room;
   }
 
   @POST
   @Path("/enter")
   public void enterRoom(@PathParam("room") String roomName, @QueryParam("person") String personName) {
-    boolean success = service.enterRoom(roomName, personName);
-    if (!success) {
-      throw new IllegalStateException(personName + " failed to enter room " + roomName);
-    }
+    service.enterRoom(roomName, personName);
   }
 }

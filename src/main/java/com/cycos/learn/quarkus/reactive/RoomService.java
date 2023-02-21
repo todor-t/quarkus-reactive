@@ -33,6 +33,7 @@ public class RoomService {
   public void init() {
     LOG.log(Level.INFO, () -> "room-service initialized, rooms: " + rooms.values().stream().sorted().toList());
     LOG.log(Level.INFO, () -> "known persons: " + knownNames);
+    rooms.values().forEach(Room::open); // TODO move to openRoom method...
   }
 
   @PreDestroy
@@ -64,14 +65,20 @@ public class RoomService {
     return name == null ? null : rooms.get(name);
   }
 
-  public boolean enterRoom(String roomName, String personName) {
-    Objects.requireNonNull(roomName, "roomName must not be null");
-    Objects.requireNonNull(personName, "roomName must not be null");
-    boolean success = rooms.containsKey(roomName); // room exists
-    success = success && knownNames.parallelStream().anyMatch(personName::equalsIgnoreCase); // known person
-    if (success) {
-      LOG.log(Level.INFO, () -> personName + " entered room " + roomName);
+  public void enterRoom(String roomName, String personName) {
+    Objects.requireNonNull(roomName, "roomName must not be null"); // BAD_REQUEST
+    Objects.requireNonNull(personName, "roomName must not be null"); // BAD_REQUEST
+    Room room = rooms.get(roomName);
+    if (room == null) {
+      throw new IllegalArgumentException("Room " + roomName + " does not exist."); // NOT_FOUND
     }
-    return success;
+    if (knownNames.parallelStream().noneMatch(personName::equalsIgnoreCase)) {
+      throw new IllegalArgumentException(personName + " is unknown."); // FORBIDDEN
+    }
+    if (room.isOpen()) {
+      LOG.log(Level.INFO, () -> personName + " entered room " + roomName);
+    } else {
+      throw new IllegalStateException("Room " + roomName + " is currently closed."); // SERVICE_UNAVAILABLE
+    }
   }
 }

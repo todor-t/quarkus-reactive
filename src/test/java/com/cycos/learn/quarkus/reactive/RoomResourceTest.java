@@ -48,6 +48,9 @@ public class RoomResourceTest {
 
     LOG.log(Level.INFO, "\n************ enter unknown room ************\n");
     enterRoom("Room X", "alice").statusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+
+    LOG.log(Level.INFO, "\n************ enter unknown room ************\n");
+    enterRoom("Room 2", "john").statusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
   }
 
   private static ValidatableResponse createRoom(String name, String location) {

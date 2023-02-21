@@ -18,6 +18,7 @@ public class RoomProducer {
   public Set<Room> createRooms() {
     Set<Room> rooms = new LinkedHashSet<>();
     rooms.add(new Room("Room 1", LOCATION));
+    rooms.add(new Room("Room 1", LOCATION)); // ingored - entry already exists
     rooms.add(new Room("Room 2", LOCATION));
     rooms.add(new Room("Room 3", LOCATION));
     return rooms;
