@@ -29,6 +29,10 @@ public class Room implements Comparable<Room> {
     return location;
   }
 
+  public boolean isOpen() {
+    return open.get();
+  }
+
   @Override
   public int hashCode() {
     int hash = 3;
