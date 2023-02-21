@@ -10,15 +10,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Room implements Comparable<Room> {
   private final String name;
   private final String location;
-  private final AtomicBoolean started = new AtomicBoolean();
+  private final AtomicBoolean open = new AtomicBoolean();
 
   public Room(String name, String location) {
     this.name = name;
     this.location = location;
   }
 
-  public boolean start() {
-    return started.compareAndSet(false, true);
+  public boolean open() {
+    return open.compareAndSet(false, true);
   }
 
   public String getName() {

@@ -51,7 +51,7 @@ public class RoomService {
    */
   public boolean createRoom(String name, String location) {
     Objects.requireNonNull(name, "name must not be null");
-    return rooms.computeIfAbsent(name, k -> new Room(k, location)).start();
+    return rooms.computeIfAbsent(name, k -> new Room(k, location)).open();
   }
 
   /**
