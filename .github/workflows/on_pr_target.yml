@@ -7,6 +7,12 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
+  pass-secret-to-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use a repo or org secret
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
   codeql:
     permissions:
       actions: read
@@ -17,5 +23,4 @@ jobs:
       token: ${{ secrets.GITHUB_TOKEN }}
 
   maven:
-    name: '▶️ actions'
     uses: ./.github/workflows/maven.yml
