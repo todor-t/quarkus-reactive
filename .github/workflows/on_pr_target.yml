@@ -1,19 +1,25 @@
 # This is workflow runs on PR
-#
-name: Pull request target
 
-# Controls when the action will run.
+name: Pull request
+
 on:
-  # Trigger workflow for pull requests.
   pull_request_target:
     types: [opened, synchronize, reopened]
 
-concurrency:
-  group: PRT_${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
   codeql:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     name: '▶️ actions'
     uses: ./.github/workflows/codeql.yml
 
