@@ -11,14 +11,21 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.ref || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
-  codeql:
-    name: '▶️ actions'
-    uses: ./.github/workflows/codeql.yml
+  pass-secret-to-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use a repo or org secret
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
+  # codeql:
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
+  #   uses: ./.github/workflows/codeql.yml
+  #   secrets:
+  #     token: ${{ secrets.GITHUB_TOKEN }}
 
   maven:
     name: '▶️ actions'
