@@ -4,7 +4,6 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.Locale;
 import java.util.Objects;
-
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

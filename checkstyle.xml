@@ -104,6 +104,9 @@
     <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
+    <module name="CustomImportOrder">
+      <property name="customImportOrderRules" value="STATIC###STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE"/>
+    </module>
 
 
     <!-- Checks for Size Violations.                    -->
