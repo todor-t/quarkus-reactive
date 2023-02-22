@@ -1,0 +1,28 @@
+# This is workflow runs on PR
+
+name: Pull request
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  security-events: write
+
+jobs:
+  pmd:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/pmd.yml
+
+  codeql:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/codeql.yml
+
+  maven:
+    uses: ./.github/workflows/maven.yml
