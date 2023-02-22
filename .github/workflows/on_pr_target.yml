@@ -13,14 +13,14 @@ jobs:
       - name: Use a repo or org secret
         run: echo ${{ secrets.GITHUB_TOKEN }}
 
-  codeql:
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    uses: ./.github/workflows/codeql.yml
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+  # codeql:
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
+  #   uses: ./.github/workflows/codeql.yml
+  #   secrets:
+  #     token: ${{ secrets.GITHUB_TOKEN }}
 
   maven:
     uses: ./.github/workflows/maven.yml
