@@ -3,6 +3,7 @@ package com.cycos.learn.quarkus.reactive;
 import static io.vertx.core.http.HttpHeaders.ACCEPT_LANGUAGE;
 
 import java.util.Locale;
+
 import javax.enterprise.context.RequestScoped;
 
 import io.vertx.core.http.HttpServerRequest;

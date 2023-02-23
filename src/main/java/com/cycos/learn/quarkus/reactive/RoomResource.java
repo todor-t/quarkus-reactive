@@ -1,6 +1,7 @@
 package com.cycos.learn.quarkus.reactive;
 
 import java.lang.System.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
