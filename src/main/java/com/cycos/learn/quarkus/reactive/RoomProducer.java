@@ -2,6 +2,7 @@ package com.cycos.learn.quarkus.reactive;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
