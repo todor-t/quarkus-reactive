@@ -1,14 +1,11 @@
-# This is workflow runs on push
-
 name: Push
 
-# Controls when the action will run.
 on:
   # Trigger workflow for pull requests.
   push:
-    branches: [main]
+    branches: [main, develop]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # allows to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
@@ -31,3 +28,7 @@ jobs:
 
   maven:
     uses: ./.github/workflows/maven.yml
+
+  docker:
+    needs: [maven]
+    uses: ./.github/workflows/docker-image.yml
