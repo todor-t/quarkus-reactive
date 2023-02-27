@@ -31,7 +31,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ github.event.repository.name }}.target
-        path: target/quarkus-app/
+        path: |
+          src/main/docker/
+          target/quarkus-app/
         retention-days: 30
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
