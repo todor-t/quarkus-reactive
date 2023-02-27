@@ -30,7 +30,7 @@ public class RoomResource {
       throw new IllegalArgumentException("Room " + name + " does not exist."); // NOT_FOUND
     }
 
-    LOG.log(System.Logger.Level.INFO, () -> "got room by name: " + room);
+    LOG.log(System.Logger.Level.DEBUG, () -> "got room by name: " + room);
     return room;
   }
 
