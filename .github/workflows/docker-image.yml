@@ -16,10 +16,10 @@ jobs:
       - shell: bash
         run: tree
 
-    - name: Build docker image
-      shell: bash
-      run: |
-        IMAGE=learn/quarkus-reactive-jvm
-        TAG=$(date +%Y%m%d-%H%M)
-        docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE}:${TAG} .
-        docker tag $IMAGE:latest $IMAGE:$TAG
+      - name: Build docker image
+        shell: bash
+        run: |
+          IMAGE=learn/quarkus-reactive-jvm
+          TAG=$(date +%Y%m%d-%H%M)
+          docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE}:${TAG} .
+          docker tag $IMAGE:latest $IMAGE:$TAG
