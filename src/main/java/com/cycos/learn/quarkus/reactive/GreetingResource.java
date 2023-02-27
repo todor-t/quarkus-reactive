@@ -41,7 +41,7 @@ public class GreetingResource {
   @GET
   @Path("/greeting/{name}")
   public String greeting(String name) {
-    LOG.log(Level.INFO, () -> "greeting: " + name);
+    LOG.log(Level.TRACE, () -> "greeting: " + name);
     logRequestLocale();
     return service.greeting(name);
   }
@@ -49,12 +49,12 @@ public class GreetingResource {
   @GET
   @Path("/greeting")
   public String greeting2(@QueryParam("name") String name) {
-    LOG.log(Level.INFO, () -> "greeting2: " + name);
+    LOG.log(Level.TRACE, () -> "greeting2: " + name);
     logRequestLocale();
     return service.greeting(name);
   }
 
   private void logRequestLocale() {
-    LOG.log(Level.INFO, () -> "requst locale: " + requestLocale.getLocale());
+    LOG.log(Level.TRACE, () -> "requst locale: " + requestLocale.getLocale());
   }
 }

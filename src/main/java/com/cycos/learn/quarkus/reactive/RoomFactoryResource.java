@@ -23,7 +23,7 @@ public class RoomFactoryResource {
   public void create(String name, @QueryParam("location") String location) {
     boolean success = service.createRoom(name, location);
     if (success) {
-      LOG.log(System.Logger.Level.INFO, () -> "successfully created room " + name);
+      LOG.log(System.Logger.Level.DEBUG, () -> "successfully created room " + name);
     } else {
       throw new IllegalStateException("The room " + name + " already exists.");
     }

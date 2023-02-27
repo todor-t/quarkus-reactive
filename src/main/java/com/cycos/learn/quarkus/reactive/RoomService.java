@@ -76,7 +76,7 @@ public class RoomService {
       throw new IllegalArgumentException(personName + " is unknown."); // FORBIDDEN
     }
     if (room.isOpen()) {
-      LOG.log(Level.INFO, () -> personName + " entered room " + roomName);
+      LOG.log(Level.DEBUG, () -> personName + " entered room " + roomName);
     } else {
       throw new IllegalStateException("Room " + roomName + " is currently closed."); // SERVICE_UNAVAILABLE
     }
