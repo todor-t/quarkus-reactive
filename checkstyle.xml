@@ -28,7 +28,7 @@
       <property name="basedir" value="${basedir}"/>
   -->
 
-  <property name="cacheFile" value="${checkstyle.cache.file}"/>
+<!--  <property name="cacheFile" value="${checkstyle.cache.file}"/>-->
 
   <!-- Checks that a package-info.java file exists for each package.     -->
   <!-- See https://checkstyle.org/config_javadoc.html#JavadocPackage -->

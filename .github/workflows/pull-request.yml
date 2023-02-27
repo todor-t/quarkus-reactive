@@ -26,3 +26,7 @@ jobs:
 
   maven:
     uses: ./.github/workflows/maven.yml
+
+  docker:
+    needs: [maven]
+    uses: ./.github/workflows/docker-image.yml
