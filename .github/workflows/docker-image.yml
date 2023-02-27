@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: ${{ github.repository }}-jvm
+  IMAGE: ${{ github.actor }}/learn/${{ github.repository.name }}-jvm
 
 jobs:
   build:
@@ -23,14 +23,21 @@ jobs:
       - name: Build docker image
         shell: bash
         run: |
+          echo '>>> Building docker image ...'
           TAG=$(date +%Y%m%d-%H%M)
           docker build -f src/main/docker/Dockerfile.jvm -t ${{ env.IMAGE }}:${TAG} .
           docker tag ${{ env.IMAGE }}:$TAG ${{ env.IMAGE }}:latest
           docker images ${{ env.IMAGE }}
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
