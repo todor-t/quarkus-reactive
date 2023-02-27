@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: ${{ github.actor }}/learn/${{ github.repository.name }}-jvm
+  IMAGE: ${{ github.actor }}/learn/${{ github.event.repository.name }}-jvm
 
 jobs:
   build:
