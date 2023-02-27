@@ -9,12 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download math result for job 1
+      - name: Download build files
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}.target
       - shell: bash
-        run: ls -la
+        run: tree
 
-    #- name: Build the Docker image
-    #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build docker image
+      shell: bash
+      run: |
+        IMAGE=learn/quarkus-reactive-jvm
+        TAG=$(date +%Y%m%d-%H%M)
+        docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE}:${TAG} .
+        docker tag $IMAGE:latest $IMAGE:$TAG
