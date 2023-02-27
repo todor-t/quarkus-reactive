@@ -22,4 +22,5 @@ jobs:
           IMAGE=learn/quarkus-reactive-jvm
           TAG=$(date +%Y%m%d-%H%M)
           docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE}:${TAG} .
-          docker tag $IMAGE:latest $IMAGE:$TAG
+          docker tag $IMAGE:$TAG $IMAGE:latest
+          docker images $IMAGE
