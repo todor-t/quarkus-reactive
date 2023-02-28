@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: {context}/src/main/docker/Dockerfile.jvm
+          file: ${{ context }}/src/main/docker/Dockerfile.jvm
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
