@@ -1,0 +1,55 @@
+name: Docker Image CI
+
+on:
+  # allows to call this workflow from other workflows
+  workflow_call:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE: ${{ github.actor }}/learn/${{ github.event.repository.name }}-jvm
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Download build files
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}.target
+      - shell: bash
+        run: tree
+
+#      - name: Build docker image
+#        shell: bash
+#        run: |
+#          echo '>>> Building docker image ...'
+#          TAG=$(date +%Y%m%d-%H%M)
+#          docker build -f src/main/docker/Dockerfile.jvm -t ${{ env.IMAGE }}:${TAG} .
+#          docker tag ${{ env.IMAGE }}:$TAG ${{ env.IMAGE }}:latest
+#          docker images ${{ env.IMAGE }}
+
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: src/main/docker/Dockerfile.jvm
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
