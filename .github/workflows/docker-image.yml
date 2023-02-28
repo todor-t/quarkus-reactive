@@ -9,8 +9,11 @@ env:
   IMAGE: ${{ github.actor }}/learn/${{ github.event.repository.name }}-jvm
 
 jobs:
-  build:
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Download build files
@@ -47,6 +50,6 @@ jobs:
         with:
           context: .
           file: src/main/docker/Dockerfile.jvm
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

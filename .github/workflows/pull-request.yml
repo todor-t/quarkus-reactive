@@ -27,4 +27,7 @@ jobs:
 
   docker:
     needs: [maven]
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/docker-image.yml
