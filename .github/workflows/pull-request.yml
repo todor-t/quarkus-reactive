@@ -10,6 +10,12 @@ permissions:
   security-events: write
 
 jobs:
+  trace:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: tree
+
   pmd:
     permissions:
       actions: read
