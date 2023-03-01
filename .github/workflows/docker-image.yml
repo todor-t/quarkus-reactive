@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE: ${{ github.actor }}/learn/${{ github.event.repository.name }}-jvm
+  PUSH_ENABLED: ${{ github.event_name != 'pull_request' &&  github.event_name != 'pull_request_target' }}
 
 jobs:
   build-and-push-image:
@@ -20,7 +21,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}.target
-      - shell: bash
+
+      - name: Trace downloads
+        shell: bash
         run: tree
 
 #      - name: Build docker image
@@ -50,6 +53,6 @@ jobs:
         with:
           context: .
           file: src/main/docker/Dockerfile.jvm
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ env.PUSH_ENABLED }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
