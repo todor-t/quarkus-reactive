@@ -1,15 +1,19 @@
 name: Pull request
 
 on:
-#  pull_request_target:
-#    types: [opened, synchronize, reopened]
-
-  pull_request:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 permissions:
   security-events: write
 
 jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
   trace:
     runs-on: ubuntu-latest
     steps:
